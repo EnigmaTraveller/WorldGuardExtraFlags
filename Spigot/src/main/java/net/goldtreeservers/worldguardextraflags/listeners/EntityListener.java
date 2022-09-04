@@ -2,12 +2,10 @@ package net.goldtreeservers.worldguardextraflags.listeners;
 
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldguard.LocalPlayer;
-import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.regions.RegionContainer;
 import com.sk89q.worldguard.session.SessionManager;
 import net.goldtreeservers.worldguardextraflags.flags.helpers.ForcedStateFlag;
-import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -16,12 +14,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityToggleGlideEvent;
 import org.bukkit.event.world.PortalCreateEvent;
 
-import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.flags.StateFlag.State;
 
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import net.goldtreeservers.worldguardextraflags.WorldGuardExtraFlagsPlugin;
 import net.goldtreeservers.worldguardextraflags.flags.Flags;
 
 @RequiredArgsConstructor

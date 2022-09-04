@@ -3,6 +3,8 @@ package net.goldtreeservers.worldguardextraflags.wg;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.sk89q.worldguard.LocalPlayer;
+import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
@@ -44,5 +46,11 @@ public class WorldGuardUtils
 		}
 		
 		return false;
+	}
+
+	public static void displayDenyMessage(LocalPlayer localPlayer, ApplicableRegionSet regions, String what)
+	{
+		String message = regions.queryValue(localPlayer, com.sk89q.worldguard.protection.flags.Flags.DENY_MESSAGE);
+		localPlayer.printError(message.replace("%what%", what));
 	}
 }

@@ -85,6 +85,8 @@ public class WorldGuardExtraFlagsPlugin extends JavaPlugin
 			flagRegistry.register(Flags.DENY_BLOCK_PLACE);
 			flagRegistry.register(Flags.ALLOW_BLOCK_BREAK);
 			flagRegistry.register(Flags.DENY_BLOCK_BREAK);
+			flagRegistry.register(Flags.ALLOW_ENTITY_PLACE);
+			flagRegistry.register(Flags.DENY_ENTITY_PLACE);
 			flagRegistry.register(Flags.GLIDE);
 			flagRegistry.register(Flags.CHUNK_UNLOAD);
 			flagRegistry.register(Flags.ITEM_DURABILITY);
@@ -137,6 +139,7 @@ public class WorldGuardExtraFlagsPlugin extends JavaPlugin
 		this.getServer().getPluginManager().registerEvents(new BlockListener(this.worldGuardPlugin, this.regionContainer, this.sessionManager), this);
 		this.getServer().getPluginManager().registerEvents(new WorldListener(this, this.regionContainer), this);
 		this.getServer().getPluginManager().registerEvents(new EntityListener(this.worldGuardPlugin, this.regionContainer, this.sessionManager), this);
+		this.getServer().getPluginManager().registerEvents(new EntityPlaceListener(this.worldGuardPlugin, this.regionContainer, this.sessionManager), this);
 
 		this.worldEditPlugin.getWorldEdit().getEventBus().register(new WorldEditListener(this.worldGuardPlugin, this.regionContainer, this.sessionManager));
 		

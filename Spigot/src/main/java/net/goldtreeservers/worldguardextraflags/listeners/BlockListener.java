@@ -3,6 +3,7 @@ package net.goldtreeservers.worldguardextraflags.listeners;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldedit.util.Location;
 import com.sk89q.worldedit.world.World;
+import com.sk89q.worldedit.world.entity.EntityType;
 import com.sk89q.worldguard.LocalPlayer;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.bukkit.event.block.BreakBlockEvent;
@@ -26,6 +27,8 @@ import lombok.RequiredArgsConstructor;
 import net.goldtreeservers.worldguardextraflags.flags.Flags;
 
 import java.util.Set;
+
+import static net.goldtreeservers.worldguardextraflags.wg.WorldGuardUtils.displayDenyMessage;
 
 @RequiredArgsConstructor
 public class BlockListener implements Listener
@@ -86,13 +89,16 @@ public class BlockListener implements Listener
 
 				ApplicableRegionSet regions = this.regionContainer.createQuery().getApplicableRegions(BukkitAdapter.adapt(block.getLocation()));
 
-				Set<Material> state = regions.queryValue(localPlayer, Flags.ALLOW_BLOCK_BREAK);
+				Set<EntityType> state = regions.queryValue(localPlayer, Flags.ALLOW_ENTITY_PLACE);
 				if (state != null && !state.contains(type)) {
 					event.setResult(Event.Result.DENY);
+					displayDenyMessage(localPlayer, regions, "break that block");
+					return;
 				} else {
-					Set<Material> state2 = regions.queryValue(localPlayer, Flags.DENY_BLOCK_BREAK);
+					Set<EntityType> state2 = regions.queryValue(localPlayer, Flags.DENY_ENTITY_PLACE);
 					if (state2 != null && state2.contains(type)) {
 						event.setResult(Event.Result.DENY);
+						displayDenyMessage(localPlayer, regions, "break that block");
 					} else {
 						event.setResult(originalResult);
 					}
@@ -115,9 +121,7 @@ public class BlockListener implements Listener
 			{
 				localPlayer = this.worldGuardPlugin.wrapPlayer(player);
 				if (this.sessionManager.hasBypass(localPlayer, (World) location.getExtent()))
-				{
 					return;
-				}
 			}
 			else
 			{
