@@ -9,8 +9,7 @@ import net.goldtreeservers.worldguardextraflags.flags.helpers.ForcedStateFlag;
 import org.bukkit.block.BlockState;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
+import org.bukkit.event.*;
 import org.bukkit.event.entity.EntityToggleGlideEvent;
 import org.bukkit.event.world.PortalCreateEvent;
 
