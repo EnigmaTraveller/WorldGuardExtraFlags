@@ -4,38 +4,29 @@ import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldedit.util.Location;
 import com.sk89q.worldguard.LocalPlayer;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
-import com.sk89q.worldguard.protection.regions.RegionContainer;
-import com.sk89q.worldguard.session.SessionManager;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerChangedWorldEvent;
-import org.bukkit.event.player.PlayerGameModeChangeEvent;
-import org.bukkit.event.player.PlayerItemConsumeEvent;
-import org.bukkit.event.player.PlayerItemDamageEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
-import org.bukkit.event.player.PlayerTeleportEvent;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.potion.Potion;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.spigotmc.event.player.PlayerSpawnLocationEvent;
-
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.flags.StateFlag.State;
+import com.sk89q.worldguard.protection.regions.RegionContainer;
 import com.sk89q.worldguard.session.Session;
-
+import com.sk89q.worldguard.session.SessionManager;
 import lombok.RequiredArgsConstructor;
 import net.goldtreeservers.worldguardextraflags.WorldGuardExtraFlagsPlugin;
 import net.goldtreeservers.worldguardextraflags.flags.Flags;
 import net.goldtreeservers.worldguardextraflags.wg.WorldGuardUtils;
 import net.goldtreeservers.worldguardextraflags.wg.handlers.FlyFlagHandler;
 import net.goldtreeservers.worldguardextraflags.wg.handlers.GiveEffectsFlagHandler;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.*;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.Potion;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.spigotmc.event.player.PlayerSpawnLocationEvent;
 
 @RequiredArgsConstructor
 public class PlayerListener implements Listener
@@ -144,6 +135,40 @@ public class PlayerListener implements Listener
 	{
 		Player player = event.getPlayer();
 		
+		Session wgSession = this.sessionManager.getIfPresent(this.worldGuardPlugin.wrapPlayer(player));
+		if (wgSession != null)
+		{
+			Boolean value = wgSession.getHandler(FlyFlagHandler.class).getCurrentValue();
+			if (value != null)
+			{
+				new BukkitRunnable()
+				{
+					@Override
+					public void run()
+					{
+						PlayerListener.this.checkFlyStatus(player);
+					}
+				}.runTask(WorldGuardExtraFlagsPlugin.getPlugin());
+			}
+		}
+		else
+		{
+			new BukkitRunnable()
+			{
+				@Override
+				public void run()
+				{
+					PlayerListener.this.checkFlyStatus(player);
+				}
+			}.runTask(WorldGuardExtraFlagsPlugin.getPlugin());
+		}
+	}
+
+
+	@EventHandler
+	public void onPlayerToggleFly(PlayerToggleFlightEvent event) {
+		Player player = event.getPlayer();
+
 		Session wgSession = this.sessionManager.getIfPresent(this.worldGuardPlugin.wrapPlayer(player));
 		if (wgSession != null)
 		{

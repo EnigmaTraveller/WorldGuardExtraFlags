@@ -10,7 +10,7 @@ import net.goldtreeservers.worldguardextraflags.flags.helpers.ForcedStateFlag.Fo
 
 public class ForcedStateFlag extends Flag<ForcedState>
 {
-	public static enum ForcedState
+	public enum ForcedState
 	{
 		ALLOW,
 		DENY,

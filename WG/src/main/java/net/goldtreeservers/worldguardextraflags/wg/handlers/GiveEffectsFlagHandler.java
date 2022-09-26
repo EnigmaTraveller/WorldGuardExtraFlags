@@ -49,8 +49,8 @@ public class GiveEffectsFlagHandler extends FlagValueChangeHandler<Set<PotionEff
         }
     }
 
-	private Map<PotionEffectType, PotionEffectDetails> removedEffects;
-    private Set<PotionEffectType> givenEffects;
+	private final Map<PotionEffectType, PotionEffectDetails> removedEffects;
+    private final Set<PotionEffectType> givenEffects;
     
     @Getter private boolean supressRemovePotionPacket;
     

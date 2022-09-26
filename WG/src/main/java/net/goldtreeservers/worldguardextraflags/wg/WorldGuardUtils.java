@@ -40,12 +40,7 @@ public class WorldGuardUtils
 		}
 		
 		Set<Object> set = (Set<Object>)result.value();
-		if (set.add(location))
-		{
-			return true;
-		}
-		
-		return false;
+		return set.add(location);
 	}
 
 	public static void displayDenyMessage(LocalPlayer localPlayer, ApplicableRegionSet regions, String what)

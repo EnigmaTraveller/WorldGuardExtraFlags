@@ -69,7 +69,7 @@ public class GlideFlagHandler extends FlagValueChangeHandler<ForcedState>
 				return;
 			}
 			
-			boolean value = (state == ForcedState.FORCE ? true : false);
+			boolean value = (state == ForcedState.FORCE);
 			
 			if (bukkitPlayer.isGliding() != value)
 			{

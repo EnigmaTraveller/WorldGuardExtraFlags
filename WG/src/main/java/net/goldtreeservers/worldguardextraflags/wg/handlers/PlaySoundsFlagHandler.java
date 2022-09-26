@@ -46,7 +46,7 @@ public class PlaySoundsFlagHandler extends FlagValueChangeHandler<Set<SoundData>
     }
 
 	private final Plugin plugin;
-    private Map<String, BukkitRunnable> runnables;
+    private final Map<String, BukkitRunnable> runnables;
 	    
 	protected PlaySoundsFlagHandler(Plugin plugin, Session session)
 	{

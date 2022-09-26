@@ -39,7 +39,7 @@ public class BlockedEffectsFlagHandler extends FlagValueChangeHandler<Set<Potion
         }
     }
 	
-	private HashMap<PotionEffectType, PotionEffectDetails> removedEffects;
+	private final HashMap<PotionEffectType, PotionEffectDetails> removedEffects;
     
 	protected BlockedEffectsFlagHandler(Session session)
 	{
